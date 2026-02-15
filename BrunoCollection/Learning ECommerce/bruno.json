@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Learning ECommerce",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
