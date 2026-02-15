@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/Services/">
+    <Project Path="Services/Basket/Basket.csproj" />
     <Project Path="Services/Catalog/Catalog.csproj" />
   </Folder>
 </Solution>

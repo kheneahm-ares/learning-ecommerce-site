@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "Services\\Catalog\\Catalog.csproj",
+        "Action": "StartWithoutDebugging"
+      },
+      {
+        "Path": "Services\\Basket\\Basket.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

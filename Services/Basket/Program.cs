@@ -1,5 +1,4 @@
-using Catalog.Data;
-using Catalog.Extensions;
+using Basket.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,13 +15,6 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-
-using (var scope = app.Services.CreateScope())
-{
-    var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
-    await DatabaseSeeder.SeedAsync(config);
-}
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -33,14 +25,11 @@ if (app.Environment.IsDevelopment())
 app.UseSwagger();
 app.UseSwaggerUI();
 
+
 app.UseHttpsRedirection();
 
 app.UseRouting(); // still call for CORS
-//app.UseCors("CorsPolicy");
 
-//app.UseAuthentication();
-//app.UseAuthorization();
-
-app.MapCatalogEndpoints();
+app.MapBasketEndpoints();
 
 app.Run();
