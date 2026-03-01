@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+
     mongodb:
         image: mongo:latest
         container_name: mongodb
@@ -26,13 +27,49 @@ services:
             - "6379:6379"
         networks:
             - catalog-network
+    postgresdb:
+        image: postgres:15-alpine
+        restart: unless-stopped
+        env_file:
+            - .env.dev
+        volumes:
+            - commerce_postgres_data:/var/lib/postgresql/data
+        ports:
+            - "5433:5432"
+        networks:
+            - discount-network
+      
+    pgadmin:
+        image: dpage/pgadmin4:7
+        restart: unless-stopped
+        env_file:
+            - .env.dev
+        environment:
+            - PGADMIN_CONFIG_SERVER_MODE=False
+            - PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED=False
+        ports:
+            - "5051:80"
+        volumes:
+            - commerce_pgadmin_data:/var/lib/pgadmin
+            - ./pgadmin-servers.json:/pgadmin4/servers.json # Mount the servers.json file, auto configure servers
+        depends_on:
+            postgresdb:
+                condition: service_started
+        networks:
+            - discount-network
 
 volumes:
     mongodb_data:
         driver: local
     mongodb_config:
         driver: local
+    commerce_postgres_data:
+        driver: local
+    commerce_pgadmin_data:
+        driver: local
 
 networks:
     catalog-network:
+        driver: bridge
+    discount-network:
         driver: bridge
